@@ -1,0 +1,9 @@
+1,Task,deneme Task1,dafdf,3,2,Asım,11.10.2025 01:35:36,Done
+2,Feature,Deneme Feature2,dfaf,4,4,Asım,11.10.2025 01:35:54,ToDo
+3,Bug,Deneme Bug,fadfdafdafads,Minor,1,Asım,13.10.2025 09:16:47,Archived
+4,Task,Deneme Task2d,f dsafdasfsadkjfkşl fjdksajfk fdsjafkjads,5,2,Asım,13.10.2025 09:18:31,Done
+5,Bug,Deneme Bugdd,dfddasf dfafdsa,Minor,1,Asım,13.10.2025 13:08:30,InProgress
+6,Bug,Yeni Bug diziden,dafdsafas,Major,3,Asım,14.10.2025 14:53:18,Done
+7,Task,deneme Feature,status kontrole,4,2,Asım,14.10.2025 15:09:46,InProgress
+8,Task,fdafdfa,fdsafas,5,2,Asım,14.10.2025 15:11:15,Done
+9,Bug,Hatalar düzeltilecek,fdsafdas,Major,3,Asım,14.10.2025 15:11:37,ToDo
