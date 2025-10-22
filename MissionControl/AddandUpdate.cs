@@ -9,6 +9,7 @@ namespace MissionControl
     public partial class AddandUpdate : Form
     {
         public bool isAddForm;
+        public bool isDetailForm;
         public string filePath = "../../Works.txt";
         WorkItem.WorkTypes selectedWorkType;
         Bug.Severities selectSeverity;
@@ -35,7 +36,7 @@ namespace MissionControl
             cbxType.DataSource = Enum.GetValues(typeof(WorkItem.WorkTypes));
             cbxStatusses.DataSource = Enum.GetValues(typeof(WorkItem.Statuses));
             cbxSeverity.DataSource = Enum.GetValues(typeof(Bug.Severities));
-            string[,] fileDataRead = Repository.LoadAllDataFromFile(filePath);
+            string[,] fileDataRead = Repository.LoadAllDataFromFile();
 
             if (isAddForm)
             {
@@ -43,9 +44,9 @@ namespace MissionControl
             }
             else
             {
-                detailStatus = fileDataRead[detailId - 1, 8];
-                detailtype = fileDataRead[detailId-1, 1];
-                detailseverity = fileDataRead[detailId - 1, 4];
+                detailStatus = fileDataRead[detailId, 8];
+                detailtype = fileDataRead[detailId, 1];
+                detailseverity = fileDataRead[detailId, 4];
 
                 cbxStatusses.SelectedIndex =
                     detailStatus == "ToDo" ? 0 : detailStatus == "InProgress" ? 1 : detailStatus == "Done" ? 2 : 3;
@@ -60,10 +61,21 @@ namespace MissionControl
                     txtTaskFeatureRating.Text = detailseverity;
                 }
 
-                txtName.Text = fileDataRead[detailId - 1, 2];
-                txtDescription.Text = fileDataRead[detailId - 1, 3];
-                txtEstimateEffort.Text = fileDataRead[detailId - 1, 5];
+                txtName.Text = fileDataRead[detailId, 2];
+                txtDescription.Text = fileDataRead[detailId, 3];
+                txtEstimateEffort.Text = fileDataRead[detailId, 5];
                 btnSave.Text = "Save";
+                if (isDetailForm)
+                {
+                    cbxSeverity.Enabled= false;
+                    cbxStatusses.Enabled= false;
+                    cbxType.Enabled = false;
+                    txtDescription.Enabled= false;
+                    txtEstimateEffort.Enabled= false;
+                    txtName.Enabled= false;
+                    txtTaskFeatureRating.Enabled= false;
+                    btnSave.Visible=false;
+                }
             }
         }
 
@@ -128,39 +140,39 @@ namespace MissionControl
             {
                 Text = "Update Form";
                 Form1 form1 = new Form1();
-                string[,] fileDizi = Repository.LoadAllDataFromFile(filePath);
+                string[,] fileDizi = Repository.LoadAllDataFromFile();
                 Enum.TryParse(cbxStatusses.SelectedIndex.ToString(), out selectStatus);
                 if (selectedWorkType == WorkItem.WorkTypes.Task)
                 {
                     Task task = new Task(txtName.Text, txtDescription.Text, StringIntConvert(txtTaskFeatureRating.Text));
-                    fileDizi[detailId - 1, 1] = selectedWorkType.ToString();
-                    fileDizi[detailId - 1, 2] = task.Name;
-                    fileDizi[detailId - 1, 3] = task.Description;
-                    fileDizi[detailId - 1, 4] = task.SubTaskCount.ToString();
-                    fileDizi[detailId - 1, 5] = task.EstimateEffort().ToString();
-                    fileDizi[detailId - 1, 8] = selectStatus.ToString();
+                    fileDizi[detailId, 1] = selectedWorkType.ToString();
+                    fileDizi[detailId, 2] = task.Name;
+                    fileDizi[detailId, 3] = task.Description;
+                    fileDizi[detailId, 4] = task.SubTaskCount.ToString();
+                    fileDizi[detailId, 5] = task.EstimateEffort().ToString();
+                    fileDizi[detailId, 8] = selectStatus.ToString();
                 }                            
                 if (selectedWorkType == WorkItem.WorkTypes.Bug)
                 {
                     
                     Enum.TryParse(cbxSeverity.SelectedIndex.ToString(), out selectSeverity);
                     Bug bug = new Bug(txtName.Text, txtDescription.Text, selectSeverity);
-                    fileDizi[detailId - 1, 1] = selectedWorkType.ToString();
-                    fileDizi[detailId - 1, 2] = bug.Name;
-                    fileDizi[detailId - 1, 3] = bug.Description;
-                    fileDizi[detailId - 1, 4] = bug.Severity.ToString();
-                    fileDizi[detailId - 1, 5] = bug.EstimateEffort().ToString();
-                    fileDizi[detailId - 1, 8] = selectStatus.ToString();
+                    fileDizi[detailId, 1] = selectedWorkType.ToString();
+                    fileDizi[detailId, 2] = bug.Name;
+                    fileDizi[detailId, 3] = bug.Description;
+                    fileDizi[detailId, 4] = bug.Severity.ToString();
+                    fileDizi[detailId, 5] = bug.EstimateEffort().ToString();
+                    fileDizi[detailId, 8] = selectStatus.ToString();
                 }
                 if (selectedWorkType == WorkItem.WorkTypes.Feature)
                 {
                     Feature feature = new Feature(txtName.Text, txtDescription.Text, StringIntConvert(txtTaskFeatureRating.Text));
-                    fileDizi[detailId - 1, 1] = selectedWorkType.ToString();
-                    fileDizi[detailId - 1, 2] = feature.Name;
-                    fileDizi[detailId - 1, 3] = feature.Description;
-                    fileDizi[detailId - 1, 4] = feature.StoryPoint.ToString();
-                    fileDizi[detailId - 1, 5] = feature.EstimateEffort().ToString();
-                    fileDizi[detailId - 1, 8] = selectStatus.ToString();
+                    fileDizi[detailId, 1] = selectedWorkType.ToString();
+                    fileDizi[detailId, 2] = feature.Name;
+                    fileDizi[detailId, 3] = feature.Description;
+                    fileDizi[detailId, 4] = feature.StoryPoint.ToString();
+                    fileDizi[detailId, 5] = feature.EstimateEffort().ToString();
+                    fileDizi[detailId, 8] = selectStatus.ToString();
                 }
                 string[] row = new string[fileDizi.GetLength(0)];
                 for (int i = 0; i < fileDizi.GetLength(0); i++)

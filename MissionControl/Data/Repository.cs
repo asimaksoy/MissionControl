@@ -14,7 +14,7 @@ namespace MissionControl.Data
         public static string filePath = "../../Works.txt";
         public static string[,] allDataArray;
 
-        public static string[,] LoadAllDataFromFile(string filePath)
+        public static string[,] LoadAllDataFromFile()
         {
             string[] fileReadDizi = File.ReadAllLines(filePath);
             int rowCount = fileReadDizi.Length;
