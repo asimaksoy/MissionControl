@@ -341,7 +341,6 @@ namespace MissionControl
         }
         public void DetailOrEdit(bool isDetail)
         {
-            //int selectedId = selectItemId;
             AddandUpdate addandUpdatefrm = new AddandUpdate();
 
             if (selectItemId != -1)
